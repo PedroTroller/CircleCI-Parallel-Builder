@@ -45,6 +45,7 @@ class RunCommand extends DisplayCommand
                 ->formatBlock([sprintf('Suite #%s', $index)], 'bg=green;fg=black', true)
         );
         $output->writeln('');
+        $exit = 0;
 
         foreach ($suites[$index-1] as $command) {
             $output->writeln(
@@ -70,7 +71,7 @@ class RunCommand extends DisplayCommand
                         ->formatBlock([sprintf('"%s" failed', $command)], 'error')
                 );
             } else {
-                $this->setCode(1);
+                $exit = 1;
                 $output->writeln(
                     $this
                         ->getHelper('formater')
@@ -79,5 +80,7 @@ class RunCommand extends DisplayCommand
             }
             $output->writeln('');
         }
+
+        return $exit;
     }
 }
