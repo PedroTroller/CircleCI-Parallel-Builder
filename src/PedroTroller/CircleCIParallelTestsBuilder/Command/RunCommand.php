@@ -70,13 +70,13 @@ class RunCommand extends DisplayCommand
             $output->writeln($process->getIncrementalOutput());
 
             if (false === $process->isSuccessful()) {
+                $exit = 1;
                 $output->writeln(
                     $this
                         ->getHelper('formater')
                         ->formatBlock([sprintf('"%s" failed', $command)], 'error')
                 );
             } else {
-                $exit = 1;
                 $output->writeln(
                     $this
                         ->getHelper('formater')
