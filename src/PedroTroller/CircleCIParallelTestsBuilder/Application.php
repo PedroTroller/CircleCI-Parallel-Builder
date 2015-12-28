@@ -21,7 +21,8 @@ class Application extends BaseApplication
 
         $command = new RunCommand();
 
-        $this->add($command, new DisplayCommand());
+        $this->add($command);
+        $this->add(new DisplayCommand());
         $this->setDefaultCommand($command->getName());
         $this->configureIO($input, $output);
 
