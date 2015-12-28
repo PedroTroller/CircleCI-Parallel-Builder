@@ -1,0 +1,3 @@
+'phpspec run':
+    weight: 1
+    suite: 'specs and validations'

@@ -1,0 +1,4 @@
+!/bin/circle-tests
+/bin/
+/composer.lock
+/vendor/

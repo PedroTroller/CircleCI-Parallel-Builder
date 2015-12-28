@@ -1,0 +1,30 @@
+{
+    "name": "pedrotroller/circle-parallel-tests-builder",
+    "description": "Easy way to build parallel sets of tests for Circle CI",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pierre PLAZANET",
+            "email": "plazanet.pierre@gmail.com"
+        }
+    ],
+    "type": "library",
+    "require": {
+        "symfony/console": "~2.0",
+        "symfony/process": "~2.0",
+        "symfony/yaml": "~2.0"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^2.4"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-0" : { "PedroTroller\\CircleCIParallelTestsBuilder": "src/" }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "bin": [
+        "bin/test-suite"
+    ]
+}
