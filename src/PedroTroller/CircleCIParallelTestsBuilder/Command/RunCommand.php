@@ -42,7 +42,7 @@ class RunCommand extends DisplayCommand
         $output->writeln(
             $this
                 ->getHelper('formater')
-                ->formatBlock([sprintf('Suite #', $index)], 'bg=green;fg=black', true)
+                ->formatBlock([sprintf('Suite #%s', $index)], 'bg=green;fg=black', true)
         );
         $output->writeln('');
 
