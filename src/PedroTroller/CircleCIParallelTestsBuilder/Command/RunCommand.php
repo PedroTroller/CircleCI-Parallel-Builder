@@ -54,11 +54,15 @@ class RunCommand extends DisplayCommand
             );
             $output->writeln('');
 
-            $process = new Process($command);
+            $process = new Process($command, null, null, null, null, null);
             $process->enableOutput();
-            $process->run(function ($e) use ($process) { echo $process->getIncrementalOutput(); });
+            $process->run(
+                function ($e) use ($output, $process) {
+                    $output->write($process->getIncrementalOutput());
+                }
+            );
+            $output->writeln($process->getIncrementalOutput());
 
-            $output->writeln('');
             if (false === $process->isSuccessful()) {
                 $output->writeln(
                     $this
@@ -66,6 +70,7 @@ class RunCommand extends DisplayCommand
                         ->formatBlock([sprintf('"%s" failed', $command)], 'error')
                 );
             } else {
+                $this->setCode(1);
                 $output->writeln(
                     $this
                         ->getHelper('formater')
