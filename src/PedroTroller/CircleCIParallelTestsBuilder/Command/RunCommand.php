@@ -54,7 +54,7 @@ class RunCommand extends DisplayCommand
             );
             $output->writeln('');
 
-            $process = new Process($command, null, null, null, null, null);
+            $process = new Process($command, null, null, null, null, array());
             $process->enableOutput();
             $process->run(
                 function ($e) use ($output, $process) {
