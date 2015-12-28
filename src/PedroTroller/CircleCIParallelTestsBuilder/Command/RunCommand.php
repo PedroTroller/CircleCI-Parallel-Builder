@@ -42,12 +42,17 @@ class RunCommand extends DisplayCommand
         $output->writeln(
             $this
                 ->getHelper('formater')
-                ->formatBlock([sprintf('Suite #%s', $index)], 'bg=green;fg=black', true)
+                ->formatBlock([sprintf('Suite #%s', $index + 1)], 'bg=green;fg=black', true)
         );
+
+        if (false === array_key_exists($index, $suites)) {
+            return;
+        }
+
         $output->writeln('');
         $exit = 0;
 
-        foreach ($suites[$index-1] as $command) {
+        foreach ($suites[$index] as $command) {
             $output->writeln(
                 $this
                     ->getHelper('formater')
