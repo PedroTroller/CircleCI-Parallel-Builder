@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\HelperSet;
 use PedroTroller\CircleCIParallelTestsBuilder\Command\RunCommand;
 use Symfony\Component\Console\Helper\FormatterHelper;
+use PedroTroller\CircleCIParallelTestsBuilder\Command\DisplayCommand;
 
 class Application extends BaseApplication
 {
@@ -20,7 +21,7 @@ class Application extends BaseApplication
 
         $command = new RunCommand();
 
-        $this->add($command);
+        $this->add($command, new DisplayCommand());
         $this->setDefaultCommand($command->getName());
         $this->configureIO($input, $output);
 
