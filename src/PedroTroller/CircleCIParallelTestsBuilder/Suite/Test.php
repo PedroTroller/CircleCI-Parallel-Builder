@@ -38,10 +38,17 @@ class Test extends Process
         return $this->initialDuration;
     }
 
-    public function setDuration($duration)
+    /**
+     * {@inheritdoc}
+     */
+    public function run($callback = null)
     {
-        $this->duration = $duration;
+        $time = time();
 
-        return $this;
+        $result = parent::run($callback);
+
+        $this->duration = ceil((time() - $time) / 60);
+
+        return $result;
     }
 }
