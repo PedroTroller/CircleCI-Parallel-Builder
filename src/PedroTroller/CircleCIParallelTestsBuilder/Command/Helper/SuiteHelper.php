@@ -34,6 +34,8 @@ class SuiteHelper extends Helper
 
     public function renderErrors(Suite $suite)
     {
+        $this->renderSuite($suite);
+
         if (true === $suite->isSuccessful()) {
             return;
         }
