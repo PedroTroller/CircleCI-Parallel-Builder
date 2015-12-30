@@ -10,7 +10,7 @@ use PedroTroller\CircleCIParallelTestsBuilder\Command\DisplayCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Yaml\Yaml;
 use PedroTroller\CircleCIParallelTestsBuilder\SuiteBuilder\SuiteBuilder;
-use Symfony\Component\Process\Process;
+use PedroTroller\CircleCIParallelTestsBuilder\Command\Helper\SuiteHelper;
 
 class RunCommand extends DisplayCommand
 {
@@ -38,54 +38,56 @@ class RunCommand extends DisplayCommand
 
         $index = $input->getOption('index');
 
-        $output->writeln('');
-        $output->writeln(
-            $this
-                ->getHelper('formater')
-                ->formatBlock([sprintf('Suite #%s', $index + 1)], 'bg=green;fg=black', true)
-        );
-
         if (false === array_key_exists($index, $suites)) {
             return;
         }
 
-        $output->writeln('');
-        $exit = 0;
+        $suite = $suites[$index];
 
-        foreach ($suites[$index] as $command) {
+        $output->writeln('');
+        $output->writeln(
+            $this
+                ->getHelper('formater')
+                ->formatBlock([$suite->getName()], 'bg=green;fg=black', true)
+        );
+
+        $output->writeln('');
+
+        foreach ($suite->getTests() as $test) {
             $output->writeln(
                 $this
                     ->getHelper('formater')
-                    ->formatBlock([sprintf('Test : %s', $command)], 'bg=yellow;fg=black')
+                    ->formatBlock([sprintf('Test : %s', $test)], 'bg=yellow;fg=black')
             );
             $output->writeln('');
 
-            $process = new Process($command, null, null, null, null, array());
-            $process->enableOutput();
-            $process->run(
-                function ($e) use ($output, $process) {
-                    $output->write($process->getIncrementalOutput());
+            $test->run(
+                function ($e) use ($output, $test) {
+                    $output->write($test->getIncrementalOutput());
                 }
             );
-            $output->writeln($process->getIncrementalOutput());
+            $output->writeln($test->getIncrementalOutput());
 
-            if (false === $process->isSuccessful()) {
-                $exit = 1;
+            if (false === $test->isSuccessful()) {
                 $output->writeln(
                     $this
                         ->getHelper('formater')
-                        ->formatBlock([sprintf('"%s" failed', $command)], 'error')
+                        ->formatBlock([sprintf('"%s" failed', $test)], 'error', true)
                 );
             } else {
                 $output->writeln(
                     $this
                         ->getHelper('formater')
-                        ->formatBlock([sprintf('"%s" succeed', $command)], 'bg=green;fg=black', true)
+                        ->formatBlock([sprintf('"%s" succeed', $test)], 'bg=green;fg=black', true)
                 );
             }
             $output->writeln('');
         }
 
-        return $exit;
+        $helper = new SuiteHelper($output);
+
+        $helper->renderErrors($suite);
+
+        return $suite->isSuccessful() ? 0 : 1;
     }
 }

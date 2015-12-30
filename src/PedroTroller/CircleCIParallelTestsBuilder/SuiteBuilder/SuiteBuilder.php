@@ -2,69 +2,58 @@
 
 namespace PedroTroller\CircleCIParallelTestsBuilder\SuiteBuilder;
 
+use PedroTroller\CircleCIParallelTestsBuilder\Suite\Test;
+use PedroTroller\CircleCIParallelTestsBuilder\Suite;
+
 class SuiteBuilder
 {
     /**
      * @var array
      */
-    private $suites;
+    private $tests;
 
-    public function __construct(array $suites)
+    public function __construct(array $tests)
     {
-        $this->suites = $suites;
-
-        foreach ($this->suites as $command => $test) {
-            $this->suites[$command] = $this->normalize($test);
+        foreach ($tests as $script => $duration) {
+            $process = new Test($script, $duration);
+            $this->tests[(string) $process] = $process;
         }
     }
 
     public function buildSuites($number = 1)
     {
+        $suites = [];
+
+        for ($i = 0; $i < $number; $i++) {
+            $suites[] = new Suite($i);
+        }
+
         $weigths = [];
+        $commands = $this->tests;
 
-        foreach ($this->suites as $command => $test) {
-            $weigths[] = $test['weigth'];
+        foreach ($commands as $command) {
+            $weigths[] = $command->getInitialDuration();
         }
 
-        $average = floor(array_sum($weigths) / $number);
+        array_multisort($weigths, SORT_DESC, SORT_REGULAR, $commands);
 
-        $suites = $this->suites;
-
-        array_multisort($weigths, SORT_ASC, SORT_REGULAR, $suites);
-
-        $result = [];
-
-        for ($i = 0; $i < $number; $i ++) {
-            $suite = [];
-            $test = end($suites);
-            $command = key($suites);
-            $weigth = $test['weigth'];
-            $suite[] = $command;
-            array_pop($suites);
-
-            while($weigth < $average && false === empty($suites)) {
-                $test = reset($suites);
-                $command = key($suites);
-                $weigth = $weigth + $test['weigth'];
-                $suite[] = $command;
-                array_shift($suites);
-            }
-
-            $result[] = $suite;
+        foreach ($commands as $command) {
+            $this->getShorterSuite($suites)->addTest($command);
         }
 
-        foreach ($result as $index => $suite) {
-            sort($suite);
-            $result[$index] = $suite;
-        }
-
-        return $result;
+        return $suites;
     }
 
-    private function normalize(array $test)
+    private function getShorterSuite(array $suites)
     {
-        return array_merge([
-            'weigth' => 1
-        ], $test);
+        $min = null;
+
+        foreach ($suites as $suite) {
+            if (null === $min || $suite->getDuration() < $min->getDuration()) {
+                $min = $suite;
+            }
+        }
+
+        return $min;
     }
 }
