@@ -57,7 +57,7 @@ class RunCommand extends DisplayCommand
             $output->writeln(
                 $this
                     ->getHelper('formater')
-                    ->formatBlock([sprintf('Test : %s', $test)], 'bg=yellow;fg=black')
+                    ->formatBlock([sprintf('Test : %s', $test)], 'info', true)
             );
             $output->writeln('');
 

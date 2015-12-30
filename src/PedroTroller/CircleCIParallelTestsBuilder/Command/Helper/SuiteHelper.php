@@ -78,6 +78,6 @@ class SuiteHelper extends Helper
             return '<fg=red>✘</fg=red>';
         }
 
-        return ' ';
+        return '⌛';
     }
 }
