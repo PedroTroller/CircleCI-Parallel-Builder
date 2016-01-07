@@ -22,7 +22,7 @@ class Suite
 
     public function addTest(Test $test)
     {
-        $this->tests[(string)$test] = $test;
+        $this->tests[(string) $test] = $test;
     }
 
     public function getTests()

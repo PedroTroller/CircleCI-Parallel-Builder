@@ -2,15 +2,12 @@
 
 namespace PedroTroller\CircleCIParallelTestsBuilder\Command;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use PedroTroller\CircleCIParallelTestsBuilder\Command\DisplayCommand;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Yaml\Yaml;
-use PedroTroller\CircleCIParallelTestsBuilder\SuiteBuilder\SuiteBuilder;
 use PedroTroller\CircleCIParallelTestsBuilder\Command\Helper\SuiteHelper;
+use PedroTroller\CircleCIParallelTestsBuilder\SuiteBuilder\SuiteBuilder;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Yaml\Yaml;
 
 class RunCommand extends DisplayCommand
 {

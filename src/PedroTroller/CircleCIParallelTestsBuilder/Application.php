@@ -2,15 +2,15 @@
 
 namespace PedroTroller\CircleCIParallelTestsBuilder;
 
+use PedroTroller\CircleCIParallelTestsBuilder\Command\DisplayCommand;
+use PedroTroller\CircleCIParallelTestsBuilder\Command\RunCommand;
 use Symfony\Component\Console\Application as BaseApplication;
+use Symfony\Component\Console\Helper\FormatterHelper;
+use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\HelperSet;
-use PedroTroller\CircleCIParallelTestsBuilder\Command\RunCommand;
-use Symfony\Component\Console\Helper\FormatterHelper;
-use PedroTroller\CircleCIParallelTestsBuilder\Command\DisplayCommand;
 
 class Application extends BaseApplication
 {
@@ -31,6 +31,6 @@ class Application extends BaseApplication
 
     protected function getDefaultHelperSet()
     {
-        return new HelperSet(['formater' => new FormatterHelper]);
+        return new HelperSet(['formater' => new FormatterHelper()]);
     }
 }

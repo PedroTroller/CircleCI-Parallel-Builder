@@ -12,7 +12,7 @@ class Test extends Process
 
     public function __construct($script, $duration)
     {
-        $this->script = $script;
+        $this->script          = $script;
         $this->initialDuration = $duration;
         $this->enableOutput();
 

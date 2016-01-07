@@ -2,13 +2,13 @@
 
 namespace PedroTroller\CircleCIParallelTestsBuilder\Command\Helper;
 
-use Symfony\Component\Console\Helper\Helper;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\Table;
 use PedroTroller\CircleCIParallelTestsBuilder\Suite;
-use Symfony\Component\Console\Helper\TableSeparator;
 use PedroTroller\CircleCIParallelTestsBuilder\Suite\Test;
 use Symfony\Component\Console\Helper\FormatterHelper;
+use Symfony\Component\Console\Helper\Helper;
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableSeparator;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class SuiteHelper extends Helper
 {
@@ -54,9 +54,9 @@ class SuiteHelper extends Helper
 
             $this->output->writeln('');
 
-            $lines = [ $test ];
+            $lines = [$test];
 
-            if ( false === empty($test->getErrorOutput())) {
+            if (false === empty($test->getErrorOutput())) {
                 $lines[] = '';
                 $lines[] = $test->getErrorOutput();
             }

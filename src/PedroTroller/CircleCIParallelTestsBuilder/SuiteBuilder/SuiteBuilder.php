@@ -2,8 +2,8 @@
 
 namespace PedroTroller\CircleCIParallelTestsBuilder\SuiteBuilder;
 
-use PedroTroller\CircleCIParallelTestsBuilder\Suite\Test;
 use PedroTroller\CircleCIParallelTestsBuilder\Suite;
+use PedroTroller\CircleCIParallelTestsBuilder\Suite\Test;
 
 class SuiteBuilder
 {
@@ -15,7 +15,7 @@ class SuiteBuilder
     public function __construct(array $tests)
     {
         foreach ($tests as $script => $duration) {
-            $process = new Test($script, $duration);
+            $process                        = new Test($script, $duration);
             $this->tests[(string) $process] = $process;
         }
     }
@@ -24,11 +24,11 @@ class SuiteBuilder
     {
         $suites = [];
 
-        for ($i = 0; $i < $number; $i++) {
+        for ($i = 0; $i < $number; ++$i) {
             $suites[] = new Suite($i);
         }
 
-        $weigths = [];
+        $weigths  = [];
         $commands = $this->tests;
 
         foreach ($commands as $command) {
