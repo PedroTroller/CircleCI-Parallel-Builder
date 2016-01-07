@@ -32,6 +32,11 @@ class SuiteHelper extends Helper
         return $table->render();
     }
 
+    public function renderTestLine(Test $test)
+    {
+        $this->output->write($test->getIncrementalOutput());
+    }
+
     public function renderErrors(Suite $suite)
     {
         $this->renderSuite($suite);

@@ -53,6 +53,8 @@ class RunCommand extends DisplayCommand
 
         $output->writeln('');
 
+        $helper = new SuiteHelper($output);
+
         foreach ($suite->getTests() as $test) {
             $output->writeln(
                 $this
@@ -62,8 +64,8 @@ class RunCommand extends DisplayCommand
             $output->writeln('');
 
             $test->run(
-                function ($e) use ($output, $test) {
-                    $output->write($test->getIncrementalOutput());
+                function ($e) use ($test, $helper) {
+                    $helper->renderTestLine($test);
                 }
             );
             $output->writeln($test->getIncrementalOutput());
@@ -84,9 +86,9 @@ class RunCommand extends DisplayCommand
             $output->writeln('');
         }
 
-        $helper = new SuiteHelper($output);
-
         $helper->renderErrors($suite);
+
+        $output->writeln('');
 
         return $suite->isSuccessful() ? 0 : 1;
     }
